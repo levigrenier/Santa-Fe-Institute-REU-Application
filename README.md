@@ -4,7 +4,7 @@ This repository contains code to supplement my application the the Santa Fe Inst
 The program contained simulates an evolving network and it is written in C++.
 
 ### Results
-I simulated two networks of 200 agents for 200 time-steps. 
+I simulated two networks of 200 agents for 200 time-steps where each agent has an average of 20 edges. 
 
 ##### First network: 
 For each time-step, every node terminated the connection with its least-connected neighbor and then randomly connected to a new node.
