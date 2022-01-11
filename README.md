@@ -24,4 +24,7 @@ The resulting network and the progression of clustering coefficeint are pictured
 ![Network2](https://user-images.githubusercontent.com/74566341/148861477-1e5bdff8-e606-4296-a4a7-5c3e8cbd636c.PNG)
 
 
+Notice the interesting peak of the clustering coefficient in this network. I assume this is because this network is essentially a sorting algorithm (adding higly-connected neighbors and discarding the lowly-connected). The reason the network doesn't dissolve entirely is because I've included a lower bound of connections per node. 
+
+
 The visuals are courtesy of the Gephi software.
