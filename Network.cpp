@@ -4,6 +4,7 @@
 
 #include "Network.h"
 
+// Network constructor
 Network::Network(int size, string fileName, int startDegree) {
     // Set _size
         _size = size;
@@ -18,6 +19,7 @@ Network::Network(int size, string fileName, int startDegree) {
         print_network(0);
 }
 
+// Print the current state of the network in the edge list format with timestamps (for transfer to Gephi)
 void Network::print_network(int timeStep) {
     for (int i = 0; i < _size; i++) {
         for (int j = 0; j < agents.at(i).neighbors.size(); j++) {
@@ -26,6 +28,7 @@ void Network::print_network(int timeStep) {
     }
 }
 
+// Update every node and print the resulting network
 void Network::take_step(int a) {
     for (int i = 0; i < _size; i++) {
         update(i);
@@ -33,20 +36,22 @@ void Network::take_step(int a) {
     print_network(a);
 }
 
-
+// Closes the file stream
 void Network::finish(){
     output.close();
 }
 
 
-
-// TODO: THE CODE BENEATH HERE (AND ABOVE THE SISTER MESSAGE) MAY BE REPEATED TO CREATE MULTILAYER NETWORKS
+// THE CODE BENEATH HERE (AND ABOVE THE SISTER MESSAGE) MAY BE REPEATED TO CREATE MULTIPLE NETWORKS
 //      (GIVEN A NEW NEIGHBOR VECTOR IN THE AGENT CLASS)
 
+// Initializes the connections between agents on the network
 void Network::initialize_neighbors(int startDegree) {
+  // Cycle through all agents
     for (int i = 0; i < _size; i++) {
 
     // BENEATH HERE IS WHERE YOU CAN CHANGE HOW THE NETWORK IS STRUCTURED AT THE BEGINNING
+      // If the agent's neighbor vector isn't filled, fill it.
         if (agents.at(i).neighbors.size()<startDegree) {
             for (int k = 0; k < startDegree-agents.at(i).neighbors.size(); k++) {
                 if (agents.at(i).neighbors.size() < agents.at(i).maxDegree) {
@@ -63,15 +68,14 @@ void Network::initialize_neighbors(int startDegree) {
     }
 }
 
-
+// Helper function to create a new neighbor connection
 void Network::new_neighbor(int ID) {
     if (agents.at(ID).neighbors.size() < agents.at(ID).maxDegree) {
 
         // BENEATH HERE IS WHERE YOU CAN ADD RULES TO ADJUST HOW THE NETWORK EVOLVES.
-            int newID;
-            int numTries = 0;
             int neighborID = -1;
             int secondNeighborSize = 0;
+          // Find the 2nd degree neighbor with the most connections (that has not already reached their maximum neighborhood size)
             if (agents.at(ID).neighbors.size() > 0) {
                 for (int i = 0; i < agents.at(ID).neighbors.size(); i++) {
                     for (int j = 0; j < agents.at(agents.at(ID).neighbors.at(i)).neighbors.size(); j++) {
@@ -83,10 +87,12 @@ void Network::new_neighbor(int ID) {
                         }
                     }
                 }
+              // If a suitable neighbor was found, connect the two nodes
                 if (neighborID != -1){
                     agents.at(ID).neighbors.push_back(neighborID);
                     agents.at(neighborID).neighbors.push_back(ID);
                 }
+          // If the agent has no neighbors to look trough, add a random neighbor.      
             } else {
                 do {
                     neighborID = rand()%_size;
@@ -94,14 +100,8 @@ void Network::new_neighbor(int ID) {
                 agents.at(ID).neighbors.push_back(neighborID);
                 agents.at(neighborID).neighbors.push_back(ID);
             }
-            /*do {
-                newID = agents.at(neighborID).neighbors.at(rand() % agents.at(neighborID).neighbors.size());
-                numTries++;
-                if (numTries >= 10) {break;}
-            } while (newID == ID || agents.at(newID).neighbors.size() > agents.at(newID).maxDegree-2);*/
+        
         // ABOVE HERE IS WHERE YOU CAN ADD RULES TO ADJUST HOW THE NETWORK EVOLVES.
-
-
     }
 }
 
@@ -126,13 +126,13 @@ void Network::remove_neighbors(int ID, int ID2) {
     // ABOVE HERE IS WHERE YOU CAN CHANGE HOW CONNECTIONS IN THE NETWORK ARE TERMINATED (HOW THE NETWORK DECAYS)
 }
 
-// TODO: THE CODE ABOVE HERE (AND BENEATH THE SISTER MESSAGE) MAY BE REPEATED TO CREATE MULTILAYER NETWORKS
+// THE CODE ABOVE HERE (AND BENEATH THE SISTER MESSAGE) MAY BE REPEATED TO CREATE MULTIPLE NETWORKS
 //      (GIVEN A NEW NEIGHBOR VECTOR IN THE AGENT CLASS)
 
 
-
+// initialization code for each agent
 void Network::Agent::initialize(int ID, int startDegree) {
-    maxDegree = ((rand()%(3*startDegree))+(startDegree/2));
+    maxDegree = ((rand()%(3*startDegree))+(startDegree/2)); //This is an arbitrary calculation
     int _ID = ID;
 }
 
