@@ -9,7 +9,7 @@ int main() {
     // User interface to set up parameters
         cout << "Complex System Agent-Based Model" << endl
              << "By: Levi Grenier" << endl << endl;
-        cout << "We will be simulating a co-evolving network of agents." << endl
+        cout << "We will be simulating a network of agents." << endl
              << "All you need to do is set some parameters." << endl << endl;
         int size;
         string filename;
@@ -27,7 +27,7 @@ int main() {
              << "Enter: ";
         cin >> steps;
 
-        cout << "\nWonderful! We will now being the calculations. This may take a while..." << endl;
+        cout << "\nWonderful! We will now being the calculations. This may take a moment..." << endl;
 
     // Running the simulation
         for (int a = 1; a <= steps; a++) {
