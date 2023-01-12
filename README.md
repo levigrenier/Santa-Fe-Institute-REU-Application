@@ -1,4 +1,4 @@
-# Santa-Fe-Institute-REU-Application-Code-Sample
+# Santa Fe Institute REU Application Code Sample
 ### Introduction
 This repository contains code to supplement my application the the Santa Fe Institute's REU program. 
 The program contained simulates an evolving network and it is written in C++.
